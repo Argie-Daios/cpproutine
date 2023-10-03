@@ -2,6 +2,20 @@
 
 Coroutines system is very usefull in games. Is the way to control the flow of the program with asynchronous functions. I have provided this library with the main functionality of coroutines (with the same methodology as Unity).
 
+# Requirements
+* **C++20**
+* **Compiler that supports C++20 features**
+
+# Compilation Command
+``` cpp
+ g++ -std=c++20 -fcoroutines your_program_name.cpp -o your_output_name
+```
+You need to specify the **-fcoroutines** flag.
+
+Note : On **Visual Studio 2019+** you just need to specify the project language to C++20 and you are done.
+
+Include : You have to include only the **Coroutine.h** on your program (Note: **Coroutine.h** is depended from the other files on the **include\cpproutine**) and you are done.
+
 * **Coroutine Functionality**
   * StartCoroutine(IEnumerator)
   * StopCoroutine(Coroutine)
