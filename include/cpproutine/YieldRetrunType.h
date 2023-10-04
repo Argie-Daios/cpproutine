@@ -23,7 +23,9 @@ namespace cpproutine
 		/// Check whenever the condition was done and stopped (This is used independent of IsDone())
 		/// </summary>
 		/// <returns>True : The condition was done  False : The condition is on proccess</returns>
-		virtual bool IsStopped() = 0;
+		virtual bool IsStopped() { return m_Stopped; }
+	protected:
+		bool m_Stopped = false;
 	};
 
 	/// <summary>
@@ -63,12 +65,9 @@ namespace cpproutine
 
 			return false;
 		}
-
-		virtual bool IsStopped() { return m_Stopped; }
 	private:
 		std::chrono::time_point<std::chrono::high_resolution_clock> m_StartTimepoint;
 		float m_Time;
-		bool m_Stopped = false;
 	};
 
 	/// <summary>
@@ -95,11 +94,8 @@ namespace cpproutine
 
 			return false;
 		}
-
-		virtual bool IsStopped() override { return m_Stopped; }
 	private:
 		std::function<bool()> m_Condition;
-		bool m_Stopped = false;
 	};
 
 	/// <summary>

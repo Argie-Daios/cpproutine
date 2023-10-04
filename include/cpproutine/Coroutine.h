@@ -90,8 +90,8 @@ namespace cpproutine
 			for (auto& pair : Coroutines)
 			{
 				auto& Function = pair.second.Function;
-				std::shared_ptr<YieldReturnType> Timer = pair.second.Function.GetValue();
-				if (Timer->IsDone())
+				auto Condition = pair.second.Function.GetValue();
+				if (Condition->IsDone())
 				{
 					Function.resume();
 				}
@@ -99,8 +99,8 @@ namespace cpproutine
 
 			for (auto it = Coroutines.begin(); it != Coroutines.end();)
 			{
-				auto Timer = it->second.Function.GetValue();
-				if (Timer->IsStopped())
+				auto Condition = it->second.Function.GetValue();
+				if (Condition->IsStopped())
 				{
 					std::cout << "In" << std::endl;
 					it = Coroutines.erase(it);
