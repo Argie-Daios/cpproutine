@@ -83,6 +83,14 @@ namespace cpproutine
 		}
 
 		/// <summary>
+		/// Removes all coroutines
+		/// </summary>
+		static void Clear()
+		{
+			Coroutines.clear();
+		}
+
+		/// <summary>
 		/// The function that executes every sumbited coroutine (Use this on your game loop, without this coroutines don't work)
 		/// </summary>
 		static void Update()

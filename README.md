@@ -19,6 +19,7 @@ Include : You have to include only the **Coroutine.h** on your program (Note: **
 * **Coroutine Functionality**
   * StartCoroutine(IEnumerator)
   * StopCoroutine(Coroutine)
+  * Clear()
   * Update()
 * **Coroutine Types**
   * IEnumerator
@@ -82,3 +83,4 @@ Use the **yield_return** keyword as you see.
 ```
 
 You just have to manage coroutines witt **StartCoroutine()/StopCoroutine()** and **Update()** will do the job for you.
+Note : In some cases you need to clear the coroutines with **Clear()**, usually when you don't mind about executing coroutines ( for example : On a game engine you don't want to execute coroutines when tou switch from **Play** to **Edit** mode.)
