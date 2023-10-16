@@ -83,6 +83,29 @@ namespace cpproutine
 		}
 
 		/// <summary>
+		/// Try to cast derived ReturnType object
+		/// </summary>
+		/// <param name="coroutine">The specific coroutine to take ReturnType object of</param>
+		/// <returns>
+		/// nullptr : If there is no such coroutine currently running or the ReturnType of this coroutine is wrong
+		///	The ReturnType : If it can be casted
+		/// </returns>
+		template<typename T>
+		static std::shared_ptr<T> TryGetReturnType(Coroutine coroutine)
+		{
+			auto it = Coroutines.find(coroutine.Id);
+			if (it != Coroutines.end())
+			{
+				if (typeid(*it->second.Function.GetValue()) == typeid(T)) 
+					return nullptr;
+				
+				return std::static_pointer_cast<T>(it->second.Function.GetValue());
+			}
+
+			return nullptr;
+		}
+
+		/// <summary>
 		/// Removes all coroutines
 		/// </summary>
 		static void Clear()
