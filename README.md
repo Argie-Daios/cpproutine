@@ -25,11 +25,12 @@ Include : You have to include only the **Coroutine.h** on your program (Note: **
   * IEnumerator
 * **Return Types**
   * WaitForSeconds
+  * WaitForSecondsWithFunction
   * WaitUntil
 
 This coroutine system is very capable of asynchronus multitasking. With the ability to **yield return** multiple times on each function.
 
-# Example with WaitForSecond
+# Example with WaitForSeconds
 
 ``` cpp
   cpproutine::IEnumerator ExampleWaitForSecondsCoroutine()
@@ -41,6 +42,24 @@ This coroutine system is very capable of asynchronus multitasking. With the abil
     std::cout << "End Coroutine";
   }
 ```
+
+Pass the seconds you want the function to sleep
+
+# Example with WaitForSecondsWithFunction
+
+``` cpp
+  cpproutine::IEnumerator ExampleWaitForSecondsCoroutine()
+  {
+    std::cout << "Start Coroutine" << std::endl;
+  
+    yield_return cpproutine::NewReturnType<cpproutine::WaitForSecondsWithFunction>(/*seconds*/,[&](float time) {/*Do something*/}, /*flags(optional)*/);
+  
+    std::cout << "End Coroutine";
+  }
+```
+
+Pass the seconds you want the function to sleep, pass the function you want to run on that proccess (The function must be **void** and must have a **float** parameter **[Recomended : Capture reference]**). Use **flags** with your own will.
+
 # Example with WaitUntil
 
 ``` cpp
@@ -83,4 +102,5 @@ Use the **yield_return** keyword as you see.
 ```
 
 You just have to manage coroutines witt **StartCoroutine()/StopCoroutine()** and **Update()** will do the job for you.
+
 Note : In some cases you need to clear the coroutines with **Clear()**, usually when you don't mind about executing coroutines ( for example : On a game engine you don't want to execute coroutines when tou switch from **Play** to **Edit** mode.)

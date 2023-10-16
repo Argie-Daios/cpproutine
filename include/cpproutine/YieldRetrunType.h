@@ -5,6 +5,13 @@
 
 namespace cpproutine
 {
+	// Flags for WaitForSecondsWithFunction
+	enum WaitForSecondsWithFunctionFlags
+	{
+		WaitForSecondsWithFunctionFlags_NoFlags = 0, // Default : No flags
+		WaitForSecondsWithFunctionFlags_RunFunctionOnEnd = 1 << 0 // Enable running the function on shutdown
+	}
+
 	/// <summary>
 	/// Pure Virtual Class (Do not use this on your coroutines)
 	/// </summary>
@@ -68,6 +75,60 @@ namespace cpproutine
 	private:
 		std::chrono::time_point<std::chrono::high_resolution_clock> m_StartTimepoint;
 		float m_Time;
+	};
+
+	/// <summary>
+	/// YieldReturnType Derrived Class (Use this to construct a condition that stops the coroutine for the given time[seconds] and runs a given function on proccess)
+	/// </summary>
+	class WaitForSecondsWithFunction : public YieldReturnType
+	{
+	public:
+		/// <summary>
+		/// Construct timer with function
+		/// </summary>
+		/// <param name="time">Timer value (on Seconds)</param>
+		WaitForSecondsWithFunction(float time, std::function<void(float)> function, WaitForSecondsWithFunctionFlags flags = WaitForSecondsWithFunctionFlags_NoFlags)
+		{
+			m_Function = function;
+			m_Flags = flags;
+			m_Time = time * 1000.0f;
+			m_StartTimepoint = std::chrono::high_resolution_clock::now();
+		}
+
+		WaitForSecondsWithFunction(const WaitForSecondsWithFunction&) = default;
+
+		virtual bool IsDone() override
+		{
+			if (m_Time == 0.0f)
+				return false;
+
+			auto endTimepoint = std::chrono::high_resolution_clock::now();
+
+			long long start = std::chrono::time_point_cast<std::chrono::milliseconds>(m_StartTimepoint).time_since_epoch().count();
+			long long end = std::chrono::time_point_cast<std::chrono::milliseconds>(endTimepoint).time_since_epoch().count();
+
+			if (end - start >= m_Time)
+			{
+				if (m_Flags & WaitForSecondsWithFunctionFlags_RunFunctionOnEnd)
+				{
+					m_Function(m_Time);
+				}
+				m_Time = 0.0f;
+				m_Stopped = true;
+				return true;
+			}
+			else
+			{
+				m_Function(end - start);
+			}
+
+			return false;
+		}
+	private:
+		std::function<void(float)> m_Function;
+		std::chrono::time_point<std::chrono::high_resolution_clock> m_StartTimepoint;
+		float m_Time;
+		WaitForSecondsWithFunctionFlags m_Flags;
 	};
 
 	/// <summary>
