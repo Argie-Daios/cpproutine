@@ -110,7 +110,6 @@ namespace cpproutine
 				auto Condition = it->second.Function.GetValue();
 				if (Condition->IsStopped())
 				{
-					std::cout << "In" << std::endl;
 					it = Coroutines.erase(it);
 				}
 				else
