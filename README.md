@@ -19,6 +19,7 @@ Include : You have to include only the **Coroutine.h** on your program (Note: **
 * **Coroutine Functionality**
   * StartCoroutine(IEnumerator)
   * StopCoroutine(Coroutine)
+  * TryGetReturnType(Coroutine)
   * Clear()
   * Update()
 * **Coroutine Types**
