@@ -96,7 +96,7 @@ namespace cpproutine
 			auto it = Coroutines.find(coroutine.Id);
 			if (it != Coroutines.end())
 			{
-				if (typeid(*it->second.Function.GetValue()) == typeid(T)) 
+				if (!(typeid(*it->second.Function.GetValue()) == typeid(T))) 
 					return nullptr;
 				
 				return std::static_pointer_cast<T>(it->second.Function.GetValue());
