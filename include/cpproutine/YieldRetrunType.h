@@ -10,7 +10,7 @@ namespace cpproutine
 	{
 		WaitForSecondsWithFunctionFlags_NoFlags = 0, // Default : No flags
 		WaitForSecondsWithFunctionFlags_RunFunctionOnEnd = 1 << 0 // Enable running the function on shutdown
-	}
+	};
 
 	/// <summary>
 	/// Pure Virtual Class (Do not use this on your coroutines)

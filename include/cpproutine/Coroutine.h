@@ -83,6 +83,18 @@ namespace cpproutine
 		}
 
 		/// <summary>
+		/// Checks if coroutine exists
+		/// </summary>
+		/// <param name="coroutine">The coroutine construct</param>
+		/// <returns>true if the coroutine exists, otherwise it returns false</returns>
+		static bool CoroutineExists(Coroutine coroutine)
+		{
+			auto it = Coroutines.find(coroutine.Id);
+
+			return it != Coroutines.end();
+		}
+
+		/// <summary>
 		/// Try to cast derived ReturnType object
 		/// </summary>
 		/// <param name="coroutine">The specific coroutine to take ReturnType object of</param>
