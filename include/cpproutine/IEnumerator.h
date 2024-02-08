@@ -49,6 +49,11 @@ namespace cpproutine
 			return not handle_.done();
 		}
 
+		bool is_complete() const
+		{
+			return handle_.done();
+		}
+
 		std::shared_ptr<YieldReturnType> GetValue()
 		{
 			return handle_.promise().value_;

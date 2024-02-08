@@ -5,6 +5,8 @@
 #include <memory>
 #include <cassert>
 
+#include <vector>
+
 #include "UUID.h"
 #include "IEnumerator.h"
 
@@ -134,7 +136,7 @@ namespace cpproutine
 			{
 				auto& Function = pair.second.Function;
 				auto Condition = pair.second.Function.GetValue();
-				if (Condition->IsDone())
+				if (!Condition || Condition->IsDone())
 				{
 					Function.resume();
 				}
@@ -143,7 +145,7 @@ namespace cpproutine
 			for (auto it = Coroutines.begin(); it != Coroutines.end();)
 			{
 				auto Condition = it->second.Function.GetValue();
-				if (Condition->IsStopped())
+				if ((!Condition && it->second.Function.is_complete()) || (Condition && Condition->IsStopped()))
 				{
 					it = Coroutines.erase(it);
 				}
