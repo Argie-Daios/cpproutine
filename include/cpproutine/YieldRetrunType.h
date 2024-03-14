@@ -119,7 +119,7 @@ namespace cpproutine
 			}
 			else
 			{
-				m_Function(end - start);
+				m_Function((float)(end - start));
 			}
 
 			return false;
