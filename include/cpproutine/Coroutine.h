@@ -21,6 +21,11 @@ namespace cpproutine
 	{
 		Coroutine() = default;
 
+		Coroutine(UUID id)
+		{
+			Id = id;
+		}
+
 		Coroutine(UUID id, IEnumerator function)
 			: Function(function)
 		{
@@ -46,10 +51,11 @@ namespace cpproutine
 	private:
 		UUID Id;
 		IEnumerator Function;
-		static const uint64_t null;
 
 		friend CoroutineManager;
 	};
+
+	inline const Coroutine null = Coroutine(0);
 
 	/// <summary>
 	/// A static class that manages the coroutines that you pass for execution
@@ -69,7 +75,7 @@ namespace cpproutine
 			do
 			{
 				uuid = UUID();
-			} while (!(uuid != Coroutine::null));
+			} while (!(uuid != null.Id));
 
 			Coroutines.emplace(uuid, Coroutine(uuid, function));
 			auto pair = Coroutines.find(uuid);
