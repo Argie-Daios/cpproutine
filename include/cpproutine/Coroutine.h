@@ -46,6 +46,7 @@ namespace cpproutine
 	private:
 		UUID Id;
 		IEnumerator Function;
+		static const uint64_t null;
 
 		friend CoroutineManager;
 	};
@@ -64,6 +65,12 @@ namespace cpproutine
 		static Coroutine StartCoroutine(IEnumerator function)
 		{
 			UUID uuid;
+			
+			do
+			{
+				uuid = UUID();
+			} while (!(uuid != Coroutine::null));
+
 			Coroutines.emplace(uuid, Coroutine(uuid, function));
 			auto pair = Coroutines.find(uuid);
 			pair->second.Function.resume();
